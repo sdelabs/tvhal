@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Applied Labs</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      background-color: #0f4e83;
+    }
+
+    .container {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      background-color: #0f4e83;
+
+      grid-template-columns: auto 14vh;
+      grid-template-rows: auto 14vh;
+      grid-template-areas:
+        "video links"
+        "video-title video-qr";
+    }
+
+    .video {
+      grid-area: video;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .video>video {
+      width: 100%;
+      height: 100%;
+    }
+
+    .video-title {
+      grid-area: video-title;
+      display: grid;
+      place-items: center;
+    }
+
+    .video-title>div {
+      color: white;
+      font-size: 2vw;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .links {
+      grid-area: links;
+      display: grid;
+      align-items: center;
+      place-items: center;
+    }
+
+    .links>a {
+      display: block;
+      width: 7vh;
+      height: 7vh;
+      padding: 10%;
+      cursor: pointer;
+      text-align: center;
+      background-color: #29689d;
+      box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+      border-radius: 50%;
+    }
+
+    .links>a>svg {
+      fill: white;
+      pointer-events: none;
+    }
+
+    .links>a.active {
+      background-color: #508ec3;
+      box-shadow: 0 0 5px 3px #d2e8ff;
+      /* box-shadow: 2px 2px 5px 3px #d2e8ff, 0 0 25px 5px #fff, 0 0 50px #fff, 0 0 50px 40px #0073e6; */
+      animation: glow 1s ease-in-out infinite alternate;
+    }
+
+    .video-qr {
+      grid-area: video-qr;
+      display: grid;
+      place-items: center;
+    }
+
+    .video-qr>img {
+      width: 12vh;
+      animation: 3s fadeIn, 1s glow ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #volumeUpButton {
+      width: 10vh;
+      height: 10vh;
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+    }
+
+    #volumeUpButton svg {
+      fill: white;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6, 0 0 25px #0073e6, 0 0 30px #0073e6, 0 0 35px #0073e6;
+      }
+
+      to {
+        /* box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6, 0 0 40px #0073e6, 0 0 50px #0073e6, 0 0 60px #0073e6, 0 0 70px #0073e6; */
+        box-shadow: 2px 2px 5px 3px #d2e8ff, 0 0 25px 5px #fff, 0 0 50px #fff, 0 0 50px 40px #0073e6;
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        /* transform: translate3d(-30vw, 0, 0); */
+        transform: scale(0);
+      }
+
+      30% {
+        /* transform: translate3d(0, 0, 0); */
+        /* box-shadow: none; */
+      }
+
+      50% {
+        /* box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6, 0 0 25px #0073e6, 0 0 30px #0073e6, 0 0 35px #0073e6; */
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        /* box-shadow: none; */
+      }
+    }
+    @keyframes pulse {
+      0% {
+        box-shadow: none;
+      }
+
+      30% {
+        box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6, 0 0 25px #0073e6, 0 0 30px #0073e6, 0 0 35px #0073e6;
+      }
+
+      50% {
+        box-shadow: none;
+      }
+      
+      70% {
+        box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6, 0 0 25px #0073e6, 0 0 30px #0073e6, 0 0 35px #0073e6;
+      }
+
+      100% {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="video">
+      <video controls controlslist="nofullscreen noplaybackrate" disablePictureInPicture class="hidden">
+        <source src="media/Welcome to Applied Labs/Welcome to Applied Labs.mp4" type="video/mp4" />
+      </video>
+
+      <video controls controlslist="nofullscreen noplaybackrate" disablePictureInPicture class="hidden">
+        <source src="media/Flying V/Flying V.mp4" type="video/mp4" />
+      </video>
+
+      <video controls controlslist="nofullscreen noplaybackrate" disablePictureInPicture class="hidden">
+        <source src="media/3D Printed Foliage Dress/3D Printed Foliage Dress.mp4" type="video/mp4" />
+      </video>
+
+      <video controls controlslist="nofullscreen noplaybackrate" disablePictureInPicture class="hidden">
+        <source src="media/Soft Robotic Fish/Soft Robotic Fish.mp4" type="video/mp4" />
+      </video>
+
+      <video controls controlslist="nofullscreen noplaybackrate" disablePictureInPicture class="hidden">
+        <source src="media/Flavorium/Flavorium.mp4" type="video/mp4" />
+      </video>
+
+      <video controls controlslist="nofullscreen noplaybackrate" disablePictureInPicture class="hidden">
+        <source src="media/Woven Interfaces/Woven Interfaces.mp4" type="video/mp4" />
+      </video>
+
+      <video controls controlslist="nofullscreen noplaybackrate" disablePictureInPicture class="hidden">
+        <source src="media/Drop of Light/A Drop of Light.mp4" type="video/mp4" />
+      </video>
+
+      <video controls controlslist="nofullscreen noplaybackrate" disablePictureInPicture class="hidden">
+        <source src="media/3D Hand Scanner/3D Hand Scanner.mp4" type="video/mp4" />
+      </video>
+
+      <video controls controlslist="nofullscreen noplaybackrate" disablePictureInPicture class="hidden">
+        <source src="media/Xpandables/Xpandables_2.mp4" type="video/mp4" />
+      </video>
+
+      <a id="volumeUpButton">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+          <path
+            d="M792-56 671-177q-25 16-53 27.5T560-131v-82q14-5 27.5-10t25.5-12L480-368v208L280-360H120v-240h128L56-792l56-56 736 736-56 56Zm-8-232-58-58q17-31 25.5-65t8.5-70q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 53-14.5 102T784-288ZM650-422l-90-90v-130q47 22 73.5 66t26.5 96q0 15-2.5 29.5T650-422ZM480-592 376-696l104-104v208Zm-80 238v-94l-72-72H200v80h114l86 86Zm-36-130Z" />
+        </svg>
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+          <path
+            d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320ZM400-606l-86 86H200v80h114l86 86v-252ZM300-480Z" />
+        </svg> -->
+      </a>
+    </div>
+    <div class="video-title">
+      <div class="hidden">Welcome to Applied Labs</div>
+      <div class="hidden">Flying V – in collaboration with Applied Labs</div>
+      <div class="hidden">3D Printed ‘Foliage’ Dress – in collaboration with Applied Labs</div>
+      <div class="hidden">Soft Robotic Fish – in collaboration with Applied Labs</div>
+      <div class="hidden">Flavorium – in collaboration with Applied Labs</div>
+      <div class="hidden">Woven Interfaces – in collaboration with Applied Labs</div>
+      <div class="hidden">A Drop of Light – in collaboration with Applied Labs</div>
+      <div class="hidden">3D Hand Scanner – in collaboration with Applied Labs</div>
+      <div class="hidden">Xpandables– in collaboration with Applied Labs</div>
+    </div>
+    <div class="links">
+      <a data-video="0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>human-greeting</title>
+          <path
+            d="M12 2C13.1 2 14 2.9 14 4S13.1 6 12 6 10 5.1 10 4 10.9 2 12 2M15.9 8.1C15.5 7.7 14.8 7 13.5 7H11C8.2 7 6 4.8 6 2H4C4 5.2 6.1 7.8 9 8.7V22H11V16H13V22H15V10.1L19 14L20.4 12.6L15.9 8.1Z" />
+        </svg>
+      </a>
+      <a data-video="1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>glasses</title>
+          <path
+            d="M3,10C2.76,10 2.55,10.09 2.41,10.25C2.27,10.4 2.21,10.62 2.24,10.86L2.74,13.85C2.82,14.5 3.4,15 4,15H7C7.64,15 8.36,14.44 8.5,13.82L9.56,10.63C9.6,10.5 9.57,10.31 9.5,10.19C9.39,10.07 9.22,10 9,10H3M7,17H4C2.38,17 0.96,15.74 0.76,14.14L0.26,11.15C0.15,10.3 0.39,9.5 0.91,8.92C1.43,8.34 2.19,8 3,8H9C9.83,8 10.58,8.35 11.06,8.96C11.17,9.11 11.27,9.27 11.35,9.45C11.78,9.36 12.22,9.36 12.64,9.45C12.72,9.27 12.82,9.11 12.94,8.96C13.41,8.35 14.16,8 15,8H21C21.81,8 22.57,8.34 23.09,8.92C23.6,9.5 23.84,10.3 23.74,11.11L23.23,14.18C23.04,15.74 21.61,17 20,17H17C15.44,17 13.92,15.81 13.54,14.3L12.64,11.59C12.26,11.31 11.73,11.31 11.35,11.59L10.43,14.37C10.07,15.82 8.56,17 7,17M15,10C14.78,10 14.61,10.07 14.5,10.19C14.42,10.31 14.4,10.5 14.45,10.7L15.46,13.75C15.64,14.44 16.36,15 17,15H20C20.59,15 21.18,14.5 21.25,13.89L21.76,10.82C21.79,10.62 21.73,10.4 21.59,10.25C21.45,10.09 21.24,10 21,10H15Z" />
+        </svg>
+      </a>
+      <a data-video="2">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>printer-3d</title>
+          <path
+            d="M19,6A1,1 0 0,0 20,5A1,1 0 0,0 19,4A1,1 0 0,0 18,5A1,1 0 0,0 19,6M19,2A3,3 0 0,1 22,5V11H18V7H6V11H2V5A3,3 0 0,1 5,2H19M18,18.25C18,18.63 17.79,18.96 17.47,19.13L12.57,21.82C12.4,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L6.53,19.13C6.21,18.96 6,18.63 6,18.25V13C6,12.62 6.21,12.29 6.53,12.12L11.43,9.68C11.59,9.56 11.79,9.5 12,9.5C12.21,9.5 12.4,9.56 12.57,9.68L17.47,12.12C17.79,12.29 18,12.62 18,13V18.25M12,11.65L9.04,13L12,14.6L14.96,13L12,11.65M8,17.66L11,19.29V16.33L8,14.71V17.66M16,17.66V14.71L13,16.33V19.29L16,17.66Z" />
+        </svg>
+      </a>
+      <a data-video="3">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>robot-industrial</title>
+          <path
+            d="M18.41,4L16,6.41V6.59L18.41,9H22V11H17.59L16,9.41V12H15A2,2 0 0,1 13,10V7.5H9.86C9.77,7.87 9.62,8.22 9.42,8.55L15.18,19H20A2,2 0 0,1 22,21V22H2V21A2,2 0 0,1 4,19H10.61L5.92,10.5C4.12,10.47 2.56,9.24 2.11,7.5C1.56,5.36 2.85,3.18 5,2.63C7.13,2.08 9.31,3.36 9.86,5.5H13V3A2,2 0 0,1 15,1H16V3.59L17.59,2H22V4H18.41M6,4.5A2,2 0 0,0 4,6.5A2,2 0 0,0 6,8.5A2,2 0 0,0 8,6.5A2,2 0 0,0 6,4.5Z" />
+        </svg>
+      </a>
+      <a data-video="4">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>test-tube</title>
+          <path
+            d="M7,2V4H8V18A4,4 0 0,0 12,22A4,4 0 0,0 16,18V4H17V2H7M11,16C10.4,16 10,15.6 10,15C10,14.4 10.4,14 11,14C11.6,14 12,14.4 12,15C12,15.6 11.6,16 11,16M13,12C12.4,12 12,11.6 12,11C12,10.4 12.4,10 13,10C13.6,10 14,10.4 14,11C14,11.6 13.6,12 13,12M14,7H10V4H14V7Z" />
+        </svg>
+      </a>
+      <a data-video="5">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>hanger</title>
+          <path
+            d="M12 4A3.5 3.5 0 0 0 8.5 7.5H10.5A1.5 1.5 0 0 1 12 6A1.5 1.5 0 0 1 13.5 7.5A1.5 1.5 0 0 1 12 9C11.45 9 11 9.45 11 10V11.75L2.4 18.2A1 1 0 0 0 3 20H21A1 1 0 0 0 21.6 18.2L13 11.75V10.85A3.5 3.5 0 0 0 15.5 7.5A3.5 3.5 0 0 0 12 4M12 13.5L18 18H6Z" />
+        </svg>
+      </a>
+      <a data-video="6">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>lightbulb-on-10</title>
+          <path
+            d="M1 11H4V13H1V11M19.1 3.5L17 5.6L18.4 7L20.5 4.9L19.1 3.5M11 1H13V4H11V1M4.9 3.5L3.5 4.9L5.6 7L7 5.6L4.9 3.5M10 22C10 22.6 10.4 23 11 23H13C13.6 23 14 22.6 14 22V21H10V22M12 6C8.7 6 6 8.7 6 12C6 14.2 7.2 16.2 9 17.2V19C9 19.6 9.4 20 10 20H14C14.6 20 15 19.6 15 19V17.2C16.8 16.2 18 14.2 18 12C18 8.7 15.3 6 12 6M13 15.9V17H11V15.9C9.3 15.5 8 13.9 8 12C8 9.8 9.8 8 12 8S16 9.8 16 12C16 13.9 14.7 15.4 13 15.9M20 11H23V13H20V11Z" />
+        </svg>
+      </a>
+      <a data-video="7">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>cube-scan</title>
+          <path
+            d="M17,22V20H20V17H22V20.5C22,20.89 21.84,21.24 21.54,21.54C21.24,21.84 20.89,22 20.5,22H17M7,22H3.5C3.11,22 2.76,21.84 2.46,21.54C2.16,21.24 2,20.89 2,20.5V17H4V20H7V22M17,2H20.5C20.89,2 21.24,2.16 21.54,2.46C21.84,2.76 22,3.11 22,3.5V7H20V4H17V2M7,2V4H4V7H2V3.5C2,3.11 2.16,2.76 2.46,2.46C2.76,2.16 3.11,2 3.5,2H7M13,17.25L17,14.95V10.36L13,12.66V17.25M12,10.92L16,8.63L12,6.28L8,8.63L12,10.92M7,14.95L11,17.25V12.66L7,10.36V14.95M18.23,7.59C18.73,7.91 19,8.34 19,8.91V15.23C19,15.8 18.73,16.23 18.23,16.55L12.75,19.73C12.25,20.05 11.75,20.05 11.25,19.73L5.77,16.55C5.27,16.23 5,15.8 5,15.23V8.91C5,8.34 5.27,7.91 5.77,7.59L11.25,4.41C11.5,4.28 11.75,4.22 12,4.22C12.25,4.22 12.5,4.28 12.75,4.41L18.23,7.59Z" />
+        </svg>
+      </a>
+      <a data-video="8">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>printer-3d-nozzle-outline</title>
+          <path
+            d="M7,2H17V7H19V13H16.5L13,17H11L7.5,13H5V7H7V2M10,22H2V20H10A1,1 0 0,0 11,19V18H13V19A3,3 0 0,1 10,22M7,9V11H8.5L12,15L15.5,11H17V9H15V4H9V9H7Z" />
+        </svg>
+      </a>
+    </div>
+    <div class="video-qr">
+      <img class="hidden" src="media/Welcome to Applied Labs/Welcome to Applied Labs_.png" alt="QR code">
+      <img class="hidden" src="media/Flying V/Flying V_.png" alt="QR code">
+      <img class="hidden" src="media/3D Printed Foliage Dress/3d Printed Foliage Dress_.png" alt="QR code">
+      <img class="hidden" src="media/Soft Robotic Fish/Soft Robotic Fish_.png" alt="QR code">
+      <img class="hidden" src="media/Flavorium/Flavorium.png" alt="QR code">
+      <img class="hidden" src="media/Woven Interfaces/Woven Interfaces.png" alt="QR code">
+      <img class="hidden" src="media/Drop of Light/Drop of Light_.png" alt="QR code">
+      <img class="hidden" src="media/3D Hand Scanner/3D Hand Scanner_.png" alt="QR code">
+      <img class="hidden" src="media/Xpandables/Xpandables_.png" alt="QR code">
+    </div>
+  </div>
+  <script>
+    (function () {
+      let videoElems = document.querySelectorAll('.video video');
+      let videoTitleElems = document.querySelectorAll('.video-title div');
+      let videoQRElems = document.querySelectorAll('.video-qr img');
+      let linkElems = document.querySelectorAll('.links a');
+      const volumeUpButton = document.getElementById('volumeUpButton');
+      let currentVideo = 0;
+
+      function playVideo(n) {
+        videoElems[currentVideo].classList.add('hidden');
+        videoElems[currentVideo].pause();
+        videoTitleElems[currentVideo].classList.add('hidden');
+        videoQRElems[currentVideo].classList.add('hidden');
+        linkElems[currentVideo].classList.remove('active');
+
+        videoElems[n].muted = true;
+        volumeUpButton.classList.remove('hidden');
+
+        videoElems[n].classList.remove('hidden');
+        videoElems[n].currentTime = 0;
+        videoElems[n].play();
+        videoTitleElems[n].classList.remove('hidden');
+        videoQRElems[n].classList.remove('hidden');
+        linkElems[n].classList.add('active');
+
+        currentVideo = n;
+      }
+
+      function playNextVideo() {
+        let next = currentVideo + 1;
+
+        if (next >= videoElems.length) {
+          next = 0;
+        }
+
+        playVideo(next);
+      }
+
+      function unMute() {
+        videoElems[currentVideo].muted = false;
+        volumeUpButton.classList.add('hidden');
+      }
+
+      videoElems.forEach(function (elem) {
+        elem.addEventListener('ended', playNextVideo);
+      });
+
+      document.querySelector('.links').addEventListener('click', function (ev) {
+        if (ev.target.dataset.video !== undefined) {
+          const n = parseInt(ev.target.dataset.video, 10);
+          playVideo(n);
+        }
+      });
+
+      volumeUpButton.addEventListener('click', unMute);
+
+      playVideo(0);
+    })();
+  </script>
+</body>
+
+</html>
