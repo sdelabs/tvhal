@@ -7,7 +7,9 @@
     <h1>Hello, IO World!</h1>
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Graphic-designer-application-projects-collage-2.0.jpg/800px-Graphic-designer-application-projects-collage-2.0.jpg">
   <script>
-    img = "img/img1.webp";
+    num = 1 + Math.floor(Math.random() * 5);
+    img = "img"+num+".webp";
+    console.log('num:', num, ', nam:', img);
     document.body.appendChild(img);
   </script>
   </body>
